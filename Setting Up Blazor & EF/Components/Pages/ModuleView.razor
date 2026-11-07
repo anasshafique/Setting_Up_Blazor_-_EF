@@ -1,0 +1,27 @@
+﻿@page "/module"
+@using Setting_Up_Blazor___EF.Data.Models
+@using Setting_Up_Blazor___EF.Services
+@inject ModuleService moduleService
+
+<PageTitle>Module View</PageTitle>
+
+<h3>ModuleView</h3>
+
+<EditForm FormName="Form" Model="@module" OnValidSubmit="HandleSubmit">
+    <label for="CodeInput">Code</label>
+    <InputText id="CodeInput" @bind-Value="module.Code"></InputText>
+    <label for="TitleInput">Title</label>
+    <InputText id="TitleInput" @bind-Value="module.Title"></InputText>
+    <button type="submit" class="btn-primary">Create</button>
+</EditForm>
+
+@code {
+    [SupplyParameterFromForm]
+    Module module { get; set; } = new Module();
+
+    public void HandleSubmit(EditContext editContext)
+    {
+        var newModule = (Module)editContext.Model; //question
+        moduleService.Add(newModule);
+    }
+}
